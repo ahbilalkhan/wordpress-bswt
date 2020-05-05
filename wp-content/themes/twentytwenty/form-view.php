@@ -26,7 +26,7 @@ get_header();
 		<div id="form_container">
 	
 	<h1><a>Home Delivery Form</a></h1>
-	<form id="deliveryForm" class="ajax" enctype="multipart/form-data" method="post">
+	<form id="deliveryForm" class="ajax" enctype="multipart/form-data" method="post" action="">
 				<div class="form_description">
 		<h2>Enter Donor's Details</h2>
 	</div>						
@@ -102,12 +102,12 @@ get_header();
 	
 	<div class="form row"> 
 		
-		<label class="form row" for="benefeciaryContact">Phone no. </label>
-		<input id="benefeciaryContact" name="benefeciaryContact" class="element text" maxlength="11" value="" type="tel" placeholder='03001234567'>
+		<label class="form row" for="beneficiaryContact">Phone no. </label>
+		<input id="beneficiaryContact" name="beneficiaryContact" class="element text" maxlength="11" value="" type="tel" placeholder='03001234567'>
 		
    
 	<label class="description" for="cnic">CNIC : </label>
-		<input class='textbox' id='cnic' inputmask="'mask': '99999-9999999-9'" maxlength='15' name='cnic_#' placeholder='xxxxx-xxxxxxx-x' required='required' type='text'>
+		<input class='textbox' id='cnic' inputmask="'mask': '99999-9999999-9'" maxlength='15' name='cnic' placeholder='xxxxx-xxxxxxx-x' required='required' type='text'>
 	
 	</div>
 	<br>
@@ -143,8 +143,11 @@ get_header();
 			
 			<input type="checkbox" id="remainingbeneficiaries" name="remainingbeneficiaries" value="">
   			<label for="remainingbeneficiaries"> Let Baitussalam choose remaining beneficiaries</label><br>
-		</li>
+			
+		    <!-- <input type="hidden" name="action" value="process_form" /> -->
+			<?php wp_nonce_field( 'new-post' ); ?></li>
 		</ul>
+		
 	</form>	
 	
 </div>

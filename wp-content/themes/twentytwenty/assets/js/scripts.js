@@ -206,10 +206,8 @@ jQuery(document).ready(function($){
        console.log('Ajax request triggered')
        var that = $(this),
        //url = that.attr('action'),
-       //type = that.attr('method');
+       type = that.attr('method');
        data = {};
-
-       
 
        that.find('[name]').each(function(index,value){
            var that = $(this),
@@ -218,65 +216,41 @@ jQuery(document).ready(function($){
 
            data[name] = value;
        });
+      console.log(data);
+
+      //  $.ajax({
+      //     url:'http://localhost/wordpress/wp-admin/admin-ajax.php',
+      //     data: data,
+      //     action: 'set_form_values',
+      //     success: function(response){
+      //       console.log("Data inserted !");
+      //       console.log(response);
+      //       $(".success_msg").css("display","block");
+             
+      //    }, error: function(data){
+      //        $(".error_msg").css("display","block");
+      //        console.log('Error! Data insertion failed');
+      //        console.log(data);
+      //              }
+      //  });
        
-       console.log(data);
+    //$('.ajax')[0].reset();
 
-    //    var campaigns = $('.campaigns').val();
-    //    var donorFirstName = $('.donorFirstName').val();
-    //    var donorLastName = $('.donorLastName').val();
-    //    var donorContact = $('.donorContact').val();
-    //    var donorEmail = $('.donorEmail').val();
-    //    var receiptNum = $('.receiptNum').val();
-    //    var donationAmount = $('.donationAmount').val();
-    //    var receiptPhoto = $('.receiptPhoto').val();
-
-    //    var beneficiaryFirstName = $('.beneficiaryFirstName').val();
-    //    var beneficiaryLastName = $('.beneficiaryLastName').val();
-    //    var benefeciaryContact = $('.benefeciaryContact').val();
-    //    var cnic = $('.cnic').val();
-    //    var beneficiaryAddress = $('.beneficiaryAddress').val();
-    //    var remainingbeneficiaries = $('.remainingbeneficiaries').val();
-      // var formdata = new FormData(jQuery('#deliveryForm'));
+    jQuery.post(
+      'http://localhost/wordpress/wp-admin/admin-ajax.php', 
+      {
+          'action': 'set_form_values',
+          'data':   data,
+          success: function(response){
+                  console.log("Data inserted !");
+                  console.log(response);}
+      }, 
+      function(response){
+       // alert('ddd');
+          //alert('The server responded: ' + response);
+      }
+  );
     
-       $.ajax({
-          //url: cpm_object.ajax_url,
-          url: myAjax.ajaxurl,
-          type:"post",
-          data: '',
-          action:'hello',
-        //   data: {
-        //      action:'set_form',
-        //      campaigns:campaigns,
-        //      donorFirstName:donorFirstName,
-        //      donorLastName:donorLastName,
-        //      donorContact:donorContact,
-        //      donorEmail:donorEmail,
-        //      receiptNum:receiptNum,
-        //      donationAmount:donationAmount,
-        //      receiptPhoto:receiptPhoto,
-        //      beneficiaryFirstName:beneficiaryFirstName,
-        //      beneficiaryLastName:beneficiaryLastName,
-        //      benefeciaryContact:benefeciaryContact,
-        //      cnic:cnic,
-        //      beneficiaryAddress:beneficiaryAddress,
-        //      remainingbeneficiaries:remainingbeneficiaries,
-
-        // },   
-        
-        
-            success: function(response){
-            $(".success_msg").css("display","block");
-            
-            
-         }, error: function(data){
-             $(".error_msg").css("display","block");
-             console.log('Error! Data insertion failed');
-                   }
-       }
-      
-       );
-       
-    $('.ajax')[0].reset();
       });
     });
 

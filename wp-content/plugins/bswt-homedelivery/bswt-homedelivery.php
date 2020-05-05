@@ -165,16 +165,99 @@ if ( ! function_exists('create_donation_request') ) {
             'ajax_url' => admin_url( 'admin-ajax.php' )
         );
         wp_localize_script( 'main', 'bswt-homedelivery', $translation_array );
+        wp_localize_script( 'main', 'form-post', $translation_array );
+
     }
     
     add_action( 'wp_enqueue_scripts', 'ajax_form_scripts' );
     add_action( 'wp_ajax_set_form', 'set_form' );    //execute when wp logged in
     
-   //To Save The Message In Custom Post Type
-$new_post = array(
+    function my_donation_scripts_function() {
+        //wp_register_script( "dontaion_script", plugin_dir_url(__FILE__).'liker_script.js', array('jquery') );
+        wp_register_script( "dontaion_script", get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), false, true );
+    
+    // localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily
+        wp_localize_script( 'dontaion_script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
+    
+        wp_enqueue_script( 'dontaion_script');
+      }
+      add_action('wp_enqueue_scripts','my_donation_scripts_function');
+      
+    function process_form(){
+        print_r($_REQUEST);
+        //$var= $_REQUEST['data']['cnic'];
+        //echo $var;
+        $data = array();
+        foreach( $_REQUEST['data'] as $key => $value ){
+            $data[$key] = $value;
+        }
+        echo 'DATA';
+        print_r($data);
+        set_form($data);
+        //return true;
+    }
+    
+      // THE AJAX ADD ACTIONS
+    add_action( 'wp_ajax_set_form_values', 'process_form' );    //execute when wp logged in
+    add_action( 'wp_ajax_nopriv_set_form_values', 'process_form'); //execute when logged out
+  
+    //To Save The Message In Custom Post Type
+   function set_form($input) {
+    global $wpdb; // this is how you get access to the database
+
+        $donorFirstName= $input['donorFirstName'];
+        $donorLastName = $input['donorLastName'];
+        $name= $donorFirstName .' '. $donorLastName;
+        $message="This is a test msg";
+        $campaigns= $input['campaigns'];
+        $donationAmount = $input['donationAmount'];
+        $donorContact = $input['donorContact'];
+        $donorEmail = $input['donorEmail'];
+        $receiptNum = $input['receiptNum'];
+        $receiptPhoto = $input['receiptPhoto'];
+
+        $beneficiaryFirstName= $input['beneficiaryFirstName'];
+        $beneficiaryLastName= $input['beneficiaryLastName'];
+        $beneficiaryName= $beneficiaryFirstName .' '. $beneficiaryLastName;
+        $beneficiaryContact= $input['beneficiaryContact'];
+        $beneficiaryCnic= $input['cnic'];
+        $beneficiaryAddress= $input['beneficiaryAddress'];
+        
+
+
+   $new_post = array(
     'post_title'    => $name,
     'post_content'  => $message,
+    'campaigns' => $campaigns,
+    'donationAmount' => $donationAmount,
+    'donorContact' => $donorContact,
+    'donorEmail' => $donorEmail,
+    'donorFirstName' => $donorFirstName,
+    'donorLastName' => $donorLastName,
+    'receiptNum' => $receiptNum,
+    'receiptPhoto' => $receiptPhoto,
+
+
+    //'' => $,
     'post_status'   => 'draft',           // Choose: publish, preview, future, draft, etc.
-    'post_type' => 'ajaxform'  //'post',page' or use a custom post type if you want to
+    'post_type' => 'donation_request'  //'post',page' or use a custom post type if you want to
  );
+ $pid = wp_insert_post($new_post); 
+ echo($pid);
+ print_r($pid);
+ print_r($new_post);
+ add_post_meta($pid, 'Campaign', $campaigns);
+ add_post_meta($pid, 'Donation Amount', $donationAmount);
+ add_post_meta($pid, 'Donor Contact No.', $donorContact);
+ add_post_meta($pid, 'donorEmail', $donorEmail);
+ add_post_meta($pid, 'Receipt Number', $receiptNum);
+ add_post_meta($pid, 'Receipt  Photo', $receiptPhoto);
  
+ add_post_meta($pid, 'Beneficiary Name', $beneficiaryName);
+ add_post_meta($pid, 'Beneficiary Contact', $beneficiaryContact);
+ add_post_meta($pid, 'Beneficiary CNIC', $beneficiaryCnic);
+ add_post_meta($pid, 'Beneficiary Address', $beneficiaryAddress);
+wp_die();
+}
+ do_action('wp_insert_post', 'set_form');
+ add_action( 'wp_ajax_set_form', 'set_form' );    //execute when wp logged in

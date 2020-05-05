@@ -759,21 +759,8 @@ function twentytwenty_get_elements_array() {
 	return apply_filters( 'twentytwenty_get_elements_array', $elements );
 }
 
-function my_theme_scripts_function() {
-	//wp_register_script( "dontaion_script", plugin_dir_url(__FILE__).'liker_script.js', array('jquery') );
-	wp_register_script( "dontaion_script", get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), false, true );
 
-// localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily
-	wp_localize_script( 'dontaion_script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
 
-	wp_enqueue_script( 'dontaion_script');
-  }
-  add_action('wp_enqueue_scripts','my_theme_scripts_function');
 
-add_action('wp_ajax_hello', 'sayHello');
-
-function sayHello(){
-	echo 'HELLOW WORLD ';
-}
   
  
