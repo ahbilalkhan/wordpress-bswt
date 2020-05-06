@@ -222,23 +222,28 @@ if ( ! function_exists('create_donation_request') ) {
         $beneficiaryContact= $input['beneficiaryContact'];
         $beneficiaryCnic= $input['cnic'];
         $beneficiaryAddress= $input['beneficiaryAddress'];
+        $remainingBenefisharies= $input['remainingbeneficiaries'];
         
 
 
    $new_post = array(
     'post_title'    => $name,
     'post_content'  => $message,
-    'campaigns' => $campaigns,
-    'donationAmount' => $donationAmount,
-    'donor_contact_no' => $donorContact,
-    'donorEmail' => $donorEmail,
-    'donor_name' => $name,
-    'acf[field_5eb18104e48cf]' => $name,
+    'campaign' => $campaigns,
+    'donor-name' => $name,
+    'donor-contact' => $donorContact,
+    'donor-email' => $donorEmail,
+    'donor_receipt-number' => $receiptNum,
+    'donor_donation-amount' => $donationAmount,
+    'donor_receipt-photo' => $receiptPhoto,
+    
+    'beneficiary-name' => $beneficiaryName,
+    'beneficiary-contact' => $beneficiaryContact,
+    'cnic'=> $beneficiaryCnic,
+    'beneficiary-address' => $beneficiaryAddress,
+    'remaining-benefisharies' =>$remainingBenefisharies,
 
-    'donorFirstName' => $donorFirstName,
-    'donorLastName' => $donorLastName,
-    'receiptNum' => $receiptNum,
-    'receiptPhoto' => $receiptPhoto,
+    
 
 
     //'' => $,
@@ -256,9 +261,9 @@ if ( ! function_exists('create_donation_request') ) {
  add_post_meta($pid, 'Receipt Number', $receiptNum);
  add_post_meta($pid, 'Receipt  Photo', $receiptPhoto);
  
- add_post_meta($pid, 'Beneficiary Name', $beneficiaryName);
- add_post_meta($pid, 'Beneficiary Contact', $beneficiaryContact);
- add_post_meta($pid, 'Beneficiary CNIC', $beneficiaryCnic);
+ add_post_meta($pid, 'beneficiary-name', $beneficiaryName);
+ add_post_meta($pid, 'beneficiary-contact', $beneficiaryContact);
+ add_post_meta($pid, 'cnic', $beneficiaryCnic);
  add_post_meta($pid, 'Beneficiary Address', $beneficiaryAddress);
 wp_die();
 }
