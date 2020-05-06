@@ -230,8 +230,11 @@ if ( ! function_exists('create_donation_request') ) {
     'post_content'  => $message,
     'campaigns' => $campaigns,
     'donationAmount' => $donationAmount,
-    'donorContact' => $donorContact,
+    'donor_contact_no' => $donorContact,
     'donorEmail' => $donorEmail,
+    'donor_name' => $name,
+    'acf[field_5eb18104e48cf]' => $name,
+
     'donorFirstName' => $donorFirstName,
     'donorLastName' => $donorLastName,
     'receiptNum' => $receiptNum,

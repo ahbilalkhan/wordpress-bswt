@@ -86,7 +86,7 @@ get_header();
 		
 	<div class="repeatingSection">
 	<h3>Enter Beneficiary Details</h3>
-	<a href="#" class="buttonGray buttonRight remove deleteBeneficiary">Delete</a>
+	<a href="#" class="buttonGray buttonRight deleteBeneficiary">Delete</a>
 	
 	<div class="description">
 		<span>
