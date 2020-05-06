@@ -1,3 +1,4 @@
+$ = jQuery;
 $('.addBeneficiary').click(function(){
     var lastRepeatingGroup = $('.repeatingSection').last();
     lastRepeatingGroup.clone().insertAfter(lastRepeatingGroup);
