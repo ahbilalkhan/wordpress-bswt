@@ -180,8 +180,17 @@ $(document).ready(function (){
   });
 });
  
+// $('#remainingbeneficiaries').is(':checked', function(){
+//   $('#remainingbeneficiaries').attr('value', 'true');
+// });
 
-
+$("#remainingbeneficiaries").on('change', function() {
+  if ($(this).is(':checked')) {
+    $(this).attr('value', 'true');
+  } else {
+    $(this).attr('value', 'false');
+  }
+});
 $('#cnic').keydown(function(){
 
     //allow  backspace, tab, ctrl+A, escape, carriage return
@@ -243,12 +252,15 @@ jQuery(document).ready(function($){
           'data':   data,
           success: function(response){
                   console.log("Data inserted !");
-                  console.log(response);}
-      }, 
-      function(response){
-       // alert('ddd');
-          //alert('The server responded: ' + response);
+                  console.log(response);
+                },
+
+          error: function(data){
+                  $(".error_msg").css("display","block");
+                  console.log('Error! Data insertion failed');
+                  console.log(data);
       }
+    }
   );
     
       });

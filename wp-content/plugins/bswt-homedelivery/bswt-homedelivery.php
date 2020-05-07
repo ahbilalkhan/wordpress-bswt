@@ -173,8 +173,8 @@ if ( ! function_exists('create_donation_request') ) {
     add_action( 'wp_ajax_set_form', 'set_form' );    //execute when wp logged in
     
     function my_donation_scripts_function() {
-        //wp_register_script( "dontaion_script", plugin_dir_url(__FILE__).'liker_script.js', array('jquery') );
-        wp_register_script( "dontaion_script", get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), false, true );
+        wp_register_script( "dontaion_script", plugin_dir_url(__FILE__).'assets/myscript.js', array('jquery'), false, true );
+        //wp_register_script( "dontaion_script", get_template_directory_uri() . '/assets/js/scripts.js', array('jquery'), false, true );
     
     // localize the script to your domain name, so that you can reference the url to admin-ajax.php file easily
         wp_localize_script( 'dontaion_script', 'myAjax', array( 'ajaxurl' => admin_url( 'admin-ajax.php' )));
@@ -193,6 +193,7 @@ if ( ! function_exists('create_donation_request') ) {
         }
         echo 'DATA';
         print_r($data);
+
         set_form($data);
         //return true;
     }
@@ -207,6 +208,7 @@ if ( ! function_exists('create_donation_request') ) {
 
         $donorFirstName= $input['donorFirstName'];
         $donorLastName = $input['donorLastName'];
+       
         $name= $donorFirstName .' '. $donorLastName;
         $message="This is a test msg";
         $campaigns= $input['campaigns'];
@@ -229,18 +231,20 @@ if ( ! function_exists('create_donation_request') ) {
    $new_post = array(
     'post_title'    => $name,
     'post_content'  => $message,
+    'post_category' => [3], 
     'campaign' => $campaigns,
     'donor-name' => $name,
     'donor-contact' => $donorContact,
     'donor-email' => $donorEmail,
-    'donor_receipt-number' => $receiptNum,
-    'donor_donation-amount' => $donationAmount,
-    'donor_receipt-photo' => $receiptPhoto,
+    'receipt-number' => $receiptNum,
+    'donation-amount' => $donationAmount,
+    'receipt-photo' => $receiptPhoto,
     
     'beneficiary-name' => $beneficiaryName,
     'beneficiary-contact' => $beneficiaryContact,
-    'cnic'=> $beneficiaryCnic,
     'beneficiary-address' => $beneficiaryAddress,
+    'cnic'=> $beneficiaryCnic, 
+    
     'remaining-benefisharies' =>$remainingBenefisharies,
 
     
@@ -254,18 +258,65 @@ if ( ! function_exists('create_donation_request') ) {
  echo($pid);
  print_r($pid);
  print_r($new_post);
- add_post_meta($pid, 'Campaign', $campaigns);
- add_post_meta($pid, 'Donation Amount', $donationAmount);
- add_post_meta($pid, 'Donor Contact No.', $donorContact);
- add_post_meta($pid, 'donorEmail', $donorEmail);
- add_post_meta($pid, 'Receipt Number', $receiptNum);
- add_post_meta($pid, 'Receipt  Photo', $receiptPhoto);
+ wp_set_post_terms( $pid, 'category', '3');
+ add_post_meta($pid, 'campaign', $campaigns);
+ add_post_meta($pid, 'donation-amount', $donationAmount);
+ add_post_meta($pid, 'donor-contact', $donorContact);
+ add_post_meta($pid, 'donor-email', $donorEmail);
+ add_post_meta($pid, 'receipt-number', $receiptNum);
+ add_post_meta($pid, 'receipt-photo', $receiptPhoto);
+ add_post_meta($pid, 'donor-name', $name);
  
  add_post_meta($pid, 'beneficiary-name', $beneficiaryName);
  add_post_meta($pid, 'beneficiary-contact', $beneficiaryContact);
  add_post_meta($pid, 'cnic', $beneficiaryCnic);
- add_post_meta($pid, 'Beneficiary Address', $beneficiaryAddress);
-wp_die();
+ add_post_meta($pid, 'beneficiary-address', $beneficiaryAddress);
+ add_post_meta($pid, 'remaining-benefisharies', $remainingBenefisharies);
+// wp_die();
 }
  do_action('wp_insert_post', 'set_form');
  add_action( 'wp_ajax_set_form', 'set_form' );    //execute when wp logged in
+
+ 
+ 
+ function wp_cnic_validation( $errors )
+{
+    global $wpdb;
+    $check = $wpdb->query( $wpdb->prepare("
+    SELECT *
+    FROM wp-postmeta
+    WHERE meta_key = cnic AND meta_value = ".$_POST['cnic']) );
+
+
+    if(!empty($check))
+    {
+       return true;
+    }
+    else
+    {
+       return false;
+    }
+}
+add_filter( 'wp_add_post_validation', 'wp_cnic_validation' );
+
+
+
+function wp_receipt_num_validation( $errors )
+{
+    global $wpdb;
+    $check = $wpdb->query( $wpdb->prepare("
+    SELECT *
+    FROM wp-postmeta
+    WHERE meta_key = Receipt Number AND meta_value = ".$_POST['receipt-number']) );
+
+
+    if(!empty($check))
+    {
+       return true;
+    }
+    else
+    {
+       return false;
+    }
+}
+add_filter( 'wp_add_post_validation', 'wp_receipt_num_validation' );

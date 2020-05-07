@@ -96,7 +96,7 @@ get_header();
 		
 	<span>
 		<label class ="description"> Last Name:</label>
-		<input type="text" name="first_name_#{x}" id="first_name_#{x}" size=14 value="" /></span>
+		<input type="text" name="beneficiaryLastName" id="beneficiaryLastName" size=14 value="" /></span>
 		
 	</div>
 	
@@ -141,7 +141,7 @@ get_header();
 			
 			<input id="saveForm" class="button_text" type="submit" value="Submit" />
 			
-			<input type="checkbox" id="remainingbeneficiaries" name="remainingbeneficiaries" value="">
+			<input type="checkbox" id="remainingbeneficiaries" name="remainingbeneficiaries" value="false">
   			<label for="remainingbeneficiaries"> Let Baitussalam choose remaining beneficiaries</label><br>
 			
 		    <!-- <input type="hidden" name="action" value="process_form" /> -->
