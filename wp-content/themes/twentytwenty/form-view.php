@@ -84,47 +84,8 @@ get_header();
 	</li>		<li class="section_break">
 		
 		
-	<div class="repeatingSection">
-	<h3>Enter Beneficiary Details</h3>
-	<a href="#" class="buttonGray buttonRight deleteBeneficiary">Delete</a>
 	
-	<div class="description">
-		<span>
-			<label class ="description"> First Name:</label>
-		<input type="text" class="b_f_name" name="beneficiaryFirstName" id="beneficiaryFirstName" size=14 value="" />
-	</span>
-		
-	<span>
-		<label class ="description"> Last Name:</label>
-		<input type="text" name="beneficiaryLastName" id="beneficiaryLastName" size=14 value="" /></span>
-		
-	</div>
-	
-	<div class="form row"> 
-		
-		<label class="form row" for="beneficiaryContact">Phone no. </label>
-		<input id="beneficiaryContact" name="beneficiaryContact" class="element text" maxlength="11" value="" type="tel" placeholder='03001234567'>
-		
-   
-	<label class="description" for="cnic">CNIC : </label>
-		<input class='textbox' id='cnic' inputmask="'mask': '99999-9999999-9'" maxlength='15' name='cnic' placeholder='xxxxx-xxxxxxx-x' required='required' type='text'>
-	
-	</div>
-	<br>
-	
-	<div class="formRow">
-	   
-
-	</div>
-	
-	
-	<div class="formRow">
-		<label class="description" for="beneficiaryAddress">Address </label>
-		<input id="beneficiaryAddress" name="beneficiaryAddress" placeholder='Enter Address' class="element text large" value="" type="text">
-		
-	</div>
-	
-</div>
+<div class="repeatingSection"></div>
 <!-- <div class="formRowRepeatingSection">
 
 		<a href="#" method="addBeneficiary" class="buttonGray buttonRight addBeneficiary" >Add Beneficiary</a>
@@ -137,7 +98,7 @@ get_header();
 			<input href="#" class='addBeneficiary' id="addBeneficiary" type="button" value='Add Beneficiary'>
 			
 			
-			<input id='count' name='count' type='hidden' value='3'>
+			<input id='count' name='count' type='hidden' value='0'>
 			
 			<input id="saveForm" class="button_text" type="submit" value="Submit" />
 			
@@ -149,6 +110,47 @@ get_header();
 		</ul>
 		
 	</form>	
+	<div style="display: none" id="repeater_beneficiary">
+	<h3>Enter Beneficiary Details</h3>
+	<a href="#" class="buttonGray buttonRight deleteBeneficiary">Delete</a>
+	
+	<div class="description">
+		<span>
+			<label class ="description"> First Name:</label>
+		<input type="text" class="b_f_name" name="beneficiaryFirstName_replaceid" id="beneficiaryFirstName_replaceid" size=14 value="" />
+	</span>
+		
+	<span>
+		<label class ="description"> Last Name:</label>
+		<input type="text" name="beneficiaryLastName_replaceid" id="beneficiaryLastName_replaceid" size=14 value="" /></span>
+		
+	</div>
+	
+	<div class="form row"> 
+		
+		<label class="form row" for="beneficiaryContact_replaceid">Phone no. </label>
+		<input id="beneficiaryContact_replaceid" name="beneficiaryContact_replaceid" class="element text" maxlength="11" value="" type="tel" placeholder='03001234567'>
+		
+   
+	<label class="description" for="cnic_replaceid">CNIC : </label>
+		<input class='textbox' id='cnic_replaceid' inputmask="'mask': '99999-9999999-9'" maxlength='15' name='cnic_replaceid' placeholder='xxxxx-xxxxxxx-x' required='required' type='text'>
+	
+	</div>
+	<br>
+	
+	<div class="formRow">
+	   
+
+	</div>
+	
+	
+	<div class="formRow">
+		<label class="description" for="beneficiaryAddress_replaceid">Address </label>
+		<input id="beneficiaryAddress_replaceid" name="beneficiaryAddress_replaceid" placeholder='Enter Address' class="element text large" value="" type="text">
+		
+	</div>
+	
+</div>
 	
 </div>
 <?php

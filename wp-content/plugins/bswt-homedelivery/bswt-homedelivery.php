@@ -218,12 +218,7 @@ if ( ! function_exists('create_donation_request') ) {
         $receiptNum = $input['receiptNum'];
         $receiptPhoto = $input['receiptPhoto'];
 
-        $beneficiaryFirstName= $input['beneficiaryFirstName'];
-        $beneficiaryLastName= $input['beneficiaryLastName'];
-        $beneficiaryName= $beneficiaryFirstName .' '. $beneficiaryLastName;
-        $beneficiaryContact= $input['beneficiaryContact'];
-        $beneficiaryCnic= $input['cnic'];
-        $beneficiaryAddress= $input['beneficiaryAddress'];
+
         $remainingBenefisharies= $input['remainingbeneficiaries'];
         
 
@@ -239,11 +234,7 @@ if ( ! function_exists('create_donation_request') ) {
     'receipt-number' => $receiptNum,
     'donation-amount' => $donationAmount,
     'receipt-photo' => $receiptPhoto,
-    
-    'beneficiary-name' => $beneficiaryName,
-    'beneficiary-contact' => $beneficiaryContact,
-    'beneficiary-address' => $beneficiaryAddress,
-    'cnic'=> $beneficiaryCnic, 
+     
     
     'remaining-benefisharies' =>$remainingBenefisharies,
 
@@ -266,14 +257,27 @@ if ( ! function_exists('create_donation_request') ) {
  add_post_meta($pid, 'receipt-number', $receiptNum);
  add_post_meta($pid, 'receipt-photo', $receiptPhoto);
  add_post_meta($pid, 'donor-name', $name);
+
+ for( $i=1;$i<= $input['count']; $i++){
+    //if(isset($input['cnic_' + $i])){
+ $beneficiaryFirstName= $input['beneficiaryFirstName_' + $i];
+ $beneficiaryLastName= $input['beneficiaryLastName_' + $i];
+ $beneficiaryName= $beneficiaryFirstName .' '. $beneficiaryLastName;
+ $beneficiaryContact= $input['beneficiaryContact_' + $i];
+ $beneficiaryCnic= $input['cnic_' + $i];
+ $beneficiaryAddress= $input['beneficiaryAddress_' + $i];
+ $postfix='';
+ if($i>1){ $postfix='_'+($i-1);}
+ add_post_meta($pid, 'beneficiary-name'+$postfix, $beneficiaryName);
+ add_post_meta($pid, 'beneficiary-contact'+$postfix, $beneficiaryContact);
+ add_post_meta($pid, 'cnic'+$postfix, $beneficiaryCnic);
+ add_post_meta($pid, 'beneficiary-address'+$postfix, $beneficiaryAddress);
+ add_post_meta($pid, 'remaining-benefisharies'+$postfix, $remainingBenefisharies);
+ print_r($input);
  
- add_post_meta($pid, 'beneficiary-name', $beneficiaryName);
- add_post_meta($pid, 'beneficiary-contact', $beneficiaryContact);
- add_post_meta($pid, 'cnic', $beneficiaryCnic);
- add_post_meta($pid, 'beneficiary-address', $beneficiaryAddress);
- add_post_meta($pid, 'remaining-benefisharies', $remainingBenefisharies);
-// wp_die();
-}
+ wp_die();
+}}
+  // }
  do_action('wp_insert_post', 'set_form');
  add_action( 'wp_ajax_set_form', 'set_form' );    //execute when wp logged in
 

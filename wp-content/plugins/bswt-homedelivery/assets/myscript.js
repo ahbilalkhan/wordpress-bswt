@@ -2,9 +2,15 @@ $ = jQuery;
 // Add a new repeating section
 jQuery('.addBeneficiary').click(function(){
     console.log('beneficiary added');
-    var lastRepeatingGroup = $('.repeatingSection').last();
-    lastRepeatingGroup.clone().insertAfter(lastRepeatingGroup);
-    return false;
+    var repeaterBenificiary = $('#repeater_beneficiary').html();
+    var  rowid = parseInt($('#count').val()) + 1;
+    repeaterBenificiary = repeaterBenificiary.replace(/replaceid/gi, rowid);
+
+    $('.repeatingSection').append(repeaterBenificiary);
+    $('#count').val(rowid);
+    // var lastRepeatingGroup = $('.repeatingSection').last();
+    // lastRepeatingGroup.clone().insertAfter(lastRepeatingGroup);
+    // return false;
 });
 
 // Delete a repeating section
